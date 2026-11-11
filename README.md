@@ -16,10 +16,19 @@ No dependencies to install — the standard library is all you need:
 ```bash
 python3 run.py samples/bad-policy.json
 python3 run.py samples/good-policy.json
+python3 run.py samples/bad-policy.json --usage samples/access-advisor.json
 ```
 
 Exit codes: `2` = usage error or unreadable policy, `1` = at least one
 high or critical finding, `0` = no high or critical findings.
+
+## Day-2 scope
+
+- Unused-permission analysis (`--usage`): compares granted actions
+  against access-advisor style usage data (days since last use, or
+  never used). Actions unused for 90+ days are HIGH; never-used or
+  undocumented grants are MEDIUM. Wildcard grants are skipped — they
+  cannot be attributed to a single action.
 
 ## Day-1 scope
 

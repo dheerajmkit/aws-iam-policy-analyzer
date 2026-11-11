@@ -14,6 +14,7 @@ import sys
 
 from iam.policy import load_policy
 from iam.checks import check_policy
+from iam.usage import load_usage, check_unused
 from iam.report import summarize, render_text, render_json
 
 
@@ -22,6 +23,8 @@ def main(argv=None):
     parser.add_argument("policy", help="IAM policy JSON file")
     parser.add_argument("--json", action="store_true",
                         help="emit findings as JSON")
+    parser.add_argument("--usage",
+                        help="access-advisor style usage JSON file")
     args = parser.parse_args(argv)
 
     try:
@@ -33,6 +36,15 @@ def main(argv=None):
     all_findings = []
     for policy in policies:
         all_findings.extend(check_policy(policy))
+
+    if args.usage:
+        try:
+            usage = load_usage(args.usage)
+        except (OSError, ValueError) as exc:
+            print(f"error: cannot load usage: {exc}", file=sys.stderr)
+            return 2
+        for policy in policies:
+            all_findings.extend(check_unused(policy, usage))
 
     if args.json:
         print(render_json(args.policy, all_findings))

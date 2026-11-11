@@ -1,0 +1,1 @@
+{"ec2:DescribeInstances":1,"iam:GetRole":45,"iam:PassRole":null,"s3:GetObject":3,"secretsmanager:GetSecretValue":120}
