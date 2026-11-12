@@ -22,6 +22,13 @@ python3 run.py samples/bad-policy.json --usage samples/access-advisor.json
 Exit codes: `2` = usage error or unreadable policy, `1` = at least one
 high or critical finding, `0` = no high or critical findings.
 
+## Day-3 scope
+
+- Unit tests (`tests/test_checks.py`): run with
+  `python3 -m unittest discover -s tests -v`.
+- Full usage guide (`docs/USAGE.md`) and a demo script
+  (`examples/run-all.sh`).
+
 ## Day-2 scope
 
 - Unused-permission analysis (`--usage`): compares granted actions
